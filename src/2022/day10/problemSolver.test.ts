@@ -1,9 +1,5 @@
 import {parseInput, problem1} from "./problemSolver";
 
-const smallTestInput = `noop
-addx 3
-addx -5`;
-
 const largeTestInput = `addx 15
 addx -11
 addx 6
@@ -153,7 +149,9 @@ noop`
 describe('day 10', function () {
     describe('parse input', function () {
         it('it should parse noop', function () {
-            const result = parseInput(smallTestInput)
+            const result = parseInput(`noop
+addx 3
+addx -5`)
             expect(result[0]).toEqual({ type: 'noop' })
             expect(result[1]).toEqual({ type: 'addx', value: 3 })
             expect(result[2]).toEqual({ type: 'addx', value: -5 })

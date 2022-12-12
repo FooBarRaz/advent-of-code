@@ -32,6 +32,9 @@ export const crt = (instructions: Instructions[]) => {
                 this.finishCycle(i)
             })
         },
+        getRegisterValues() {
+            return registerValues
+        }
     }
 }
 
@@ -56,5 +59,9 @@ export const problem1 = (input: string): number => {
     const instructions = parseInput(input)
     const processor = crt(instructions)
 
-    return 0
+    processor.run()
+
+    return measurements
+        .map(measurement => processor.getRegisterValues()[measurement] * (measurement + 1))
+        .reduce((acc, val) => acc + val, 0)
 }
