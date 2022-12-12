@@ -1,4 +1,5 @@
-import {parseInput, problem1} from "./problemSolver";
+import {parseInput, problem1, problem2} from "./problemSolver";
+import {data} from "./data";
 
 const largeTestInput = `addx 15
 addx -11
@@ -159,10 +160,35 @@ addx -5`)
     });
 
     describe('problem1', function () {
-        it('should ', function () {
+        it('should find the sum of the 6 necessary measurements', function () {
             const result  = problem1(largeTestInput)
-            expect(result).toEqual(0)
+            expect(result).toEqual(13140)
         });
+
+        it('should work for large dataset', function () {
+            const result = problem1(data)
+            expect(result).toEqual(5858)
+        });
+    });
+
+    describe('problem2', function () {
+        it('should render', function () {
+            const result  = problem2(largeTestInput)
+            expect(result).toEqual(`##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######.....
+`)
+
+        });
+
+        it('should work for large dataset', function () {
+            const result = problem2(data)
+            expect(result).toBeDefined()
+            console.log(result)
+        })
     });
 });
 

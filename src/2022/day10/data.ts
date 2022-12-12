@@ -136,5 +136,4 @@ addx 2
 addx -11
 noop
 noop
-noop
-`
+noop`
