@@ -1,4 +1,4 @@
-import {generateMonkeys, generateTestMonkeys, parseInput, problem1, round} from "./problemSolver";
+import {generateMonkeys, generateTestMonkeys, parseInput, problem1, problem2, round, run} from "./problemSolver";
 
 const testInput = `Monkey 0:
   Starting items: 79, 98
@@ -43,7 +43,7 @@ describe('day 11', function () {
     describe('round', function () {
         it('should run a round', function () {
             const testMonkeys = generateTestMonkeys()
-            const result = round(testMonkeys)
+            const result = round(testMonkeys, true)
             /**
              * Monkey 0: 20, 23, 27, 26
 Monkey 1: 2080, 25, 167, 207, 401, 1046
@@ -65,7 +65,7 @@ Monkey 1: 2080, 25, 167, 207, 401, 1046
         describe('given real dataset', function () {
             it('should find most active monkey', function () {
                 const result = problem1(generateMonkeys())
-                expect(result).toEqual(10605)
+                expect(result).toEqual(72884)
             });
         })
     });
@@ -73,9 +73,16 @@ Monkey 1: 2080, 25, 167, 207, 401, 1046
     describe('problem 2', function () {
         describe('given test dataset', function () {
             it('should find most active monkey', function () {
-
+                const result = problem2(generateTestMonkeys())
+                expect(result).toEqual(2713310158)
             });
         });
 
+        describe('given real dataset', function () {
+            it('should find most active monkeys', function () {
+                const result = problem2(generateMonkeys())
+                expect(result).toEqual(15310845153)
+            });
+        });
     });
 });
