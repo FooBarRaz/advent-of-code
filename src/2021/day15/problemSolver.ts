@@ -84,51 +84,6 @@ export class ChitonGrid extends Grid<number> {
     }
 }
 
-
-function vertexWithShortestDistance(vertices: Point[], distances: Record<string, number>) {
-    return vertices
-        .reduce((acc, vertex) => {
-            if (distances[vertex.toString()] < distances[acc.toString()]) {
-                return vertex
-            }
-            return acc
-        }, vertices[0])
-}
-
-//Dijkstra shortest path algorithm using Prim’s Algorithm in O(V2):
-export const getShortestPath = (points: ChitonGrid, start: Point, destination: Point) => {
-    const sptSet = []
-    const allPoints = points.allPoints()
-
-    let distances: Record<string, number> = allPoints.reduce((acc, point) => {
-        const pointString = point.toString()
-        return {
-            ...acc,
-            [pointString]: point.equals(start) ? 0 : Number.MAX_VALUE
-        }
-    }, {});
-
-    while (!allPoints.every(point => sptSet.includes(point))) {
-        const unvisitedVertices = allPoints.filter(point => !sptSet.includes(point))
-        const currentVertex = vertexWithShortestDistance(unvisitedVertices, distances)
-        sptSet.push(currentVertex)
-        if(currentVertex.equals(destination)) {
-            return distances[currentVertex.toString()]
-        }
-        const neighbors = points.getAdjacentPoints(currentVertex, false);
-        neighbors.forEach(neighbor => {
-            const neighborString = neighbor.point.toString()
-            const currentVertexString = currentVertex.toString()
-            const distanceToNeighbor = distances[currentVertexString] + points.rows[neighbor.point.row][neighbor.point.column]
-            if (distanceToNeighbor < distances[neighborString]) {
-                distances[neighborString] = distanceToNeighbor
-            }
-        })
-    }
-    console.log(distances)
-    return distances[destination.toString()]
-}
-
 function stringToIntArray(eachRow: string) {
     return eachRow.split('').map(stringToInt);
 }
@@ -143,6 +98,3 @@ export const parseData = (data: string): ChitonGrid => {
 function stringToInt(eachCharacter: string) {
     return parseInt(eachCharacter);
 }
-
-const getCellValueFor
-

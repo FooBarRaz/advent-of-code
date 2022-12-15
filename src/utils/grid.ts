@@ -1,4 +1,5 @@
 import {fillArray} from "./listOps";
+import {ChitonGrid} from "../2021/day15/problemSolver";
 
 export class Point {
     constructor(private _row: number, private _column: number) {
@@ -75,6 +76,14 @@ export class Grid<T> {
 
     getPointValue(point: Point): T {
         return this.rows[point.row][point.column]
+    }
+
+    findCellByValue(val: T): Point {
+        const point = this.allPoints().find(point => this.getPointValue(point) === val)
+        if (!point) {
+            throw new Error(`Could not find cell with value ${val}`)
+        }
+        return point
     }
 
     getAdjacentPoints(point: Point, includeDiagonallyAdjacentCells = true): PointAndValue<T>[] {
@@ -157,4 +166,60 @@ export class Grid<T> {
     public get allCells(): Array<T> {
         return this.rows.reduce((prev, curr) => [...prev, ...curr ], [])
     }
+}
+
+function vertexWithShortestDistance(vertices: Point[], distances: Record<string, number>) {
+    return vertices
+        .reduce((acc, vertex) => {
+            if (distances[vertex.toString()] < distances[acc.toString()]) {
+                return vertex
+            }
+            return acc
+        }, vertices[0])
+}
+
+export function getShortestPath(points: Grid<number>, start: Point, destination: Point, hillClimber = false) {
+    const sptSet = []
+    const allPoints = points.allPoints()
+
+    let distances: Record<string, number> = allPoints.reduce((acc, point) => {
+        const pointString = point.toString()
+        return {
+            ...acc,
+            [pointString]: point.equals(start) ? 0 : Number.MAX_VALUE
+        }
+    }, {});
+
+    const unvisitedVertices = () => allPoints.filter(point => !sptSet.includes(point))
+    while (unvisitedVertices().length) {
+        const currentVertex = vertexWithShortestDistance(unvisitedVertices(), distances)
+        sptSet.push(currentVertex)
+        if (currentVertex.equals(destination)) {
+            break
+        }
+        const neighbors = points.getAdjacentPoints(currentVertex, false);
+        neighbors.forEach(neighbor => {
+            const neighborString = neighbor.point.toString()
+            const currentVertexString = currentVertex.toString()
+            let distanceToNeighbor: number;
+            if (hillClimber && points.getPointValue(currentVertex) < points.getPointValue(currentVertex)) {
+                distanceToNeighbor = 0
+            }
+            else {
+                distanceToNeighbor = distances[currentVertexString] + points.getPointValue(neighbor.point);
+            }
+            if (distanceToNeighbor < distances[neighborString]) {
+                distances[neighborString] = distanceToNeighbor
+            }
+        })
+    }
+    return {
+        distance: distances[destination.toString()],
+        pathLength: new Set(sptSet).size
+    }
+}
+
+//Dijkstra shortest path algorithm using Prim’s Algorithm in O(V2):
+export const getShortestPathDistance = (points: ChitonGrid, start: Point, destination: Point) => {
+    return getShortestPath(points, start, destination).distance;
 }

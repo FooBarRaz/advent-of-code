@@ -1,6 +1,6 @@
 import {data} from "../data";
-import {getShortestPath, parseData} from "../problemSolver";
-import {Point} from "../../../utils/grid";
+import {parseData} from "../problemSolver";
+import {getShortestPathDistance, Point} from "../../../utils/grid";
 
 describe('data parsing', function () {
     it('should parse out each line of data', function () {
@@ -26,7 +26,7 @@ describe('traversal', function () {
         const grid = parseData(testData);
         const entryPosition = new Point(0, 0);
         let destination = new Point(9, 9);
-        const shortestPath = getShortestPath(grid, entryPosition, destination);
+        const shortestPath = getShortestPathDistance(grid, entryPosition, destination);
         expect(shortestPath).toEqual(40);
         // const leastRiskyPosition = grid.getLeastRiskyPath();
         // expect(leastRiskyPosition).toEqual(40);
@@ -39,7 +39,7 @@ describe('problem 1', function () {
 const grid = parseData(data);
         const entryPosition = new Point(0, 0);
         let destination = new Point(grid.rows.length -1, grid.columns.length -1);
-        const shortestPath = getShortestPath(grid, entryPosition, destination);
+        const shortestPath = getShortestPathDistance(grid, entryPosition, destination);
         expect(shortestPath).toEqual(540);
     });
 
