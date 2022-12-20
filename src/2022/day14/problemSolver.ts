@@ -13,7 +13,7 @@ export class Line {
             // return each point in between
             const [leftPoint, rightPoint] = [this.pointA.column, this.pointB.column].sort()
             return fillArray((rightPoint - leftPoint) + 1).map(eachPoint => {
-                return new Point(this.pointA.row, leftPoint + eachPoint)
+                return new Point(leftPoint + eachPoint, this.pointA.row)
             })
         }
         if (this.pointA.column === this.pointB.column) {
@@ -21,7 +21,7 @@ export class Line {
             // return each point in between
             const [bottomPoint, topPoint] = [this.pointA.row, this.pointB.row].sort()
             return fillArray((topPoint - bottomPoint) + 1).map(eachPoint => {
-                return new Point(bottomPoint + eachPoint, this.pointA.column)
+                return new Point(this.pointA.column, bottomPoint + eachPoint)
             })
         } else throw new Error('not a flat line, probably diagonal')
     }

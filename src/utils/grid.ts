@@ -9,7 +9,7 @@ export const initializeGrid = <T>(rows: number, columns: number, placeholder: T)
 }
 
 export class Point {
-    constructor(private _row: number, private _column: number) {
+    constructor(private _x: number, private _y: number) {
     }
 
     static fromString(stringPoint: string): Point {
@@ -19,11 +19,11 @@ export class Point {
 
 
     public get row() {
-        return this._row
+        return this._y
     }
 
     public get column() {
-        return this._column
+        return this._x
     }
 
     equals(other: Point): boolean {
@@ -168,6 +168,7 @@ export class Grid<T> {
     print(separator = ',') {
         const text = this.rows.map(eachRow => eachRow.join(separator)).join('\n')
         console.log(text)
+        return text;
     }
 
     public get allCells(): Array<T> {

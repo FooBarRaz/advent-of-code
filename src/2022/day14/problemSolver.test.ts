@@ -6,30 +6,30 @@ const testInput = `498,4 -> 498,6 -> 496,6
 describe('day 14', function () {
     describe('Line', function () {
         describe('given a flat horizontal line', function () {
-            const line = new Line(new Point(0, 4), new Point(0,1))
+            const line = new Line(new Point(0, 4), new Point(0, 1))
             it('should return all points on that line', function () {
                 const actual = line.allPointsOnFlatLine();
                 expect(actual).toEqual(
                     [
-                        new Point(0,1),
-                        new Point(0,2),
-                        new Point(0,3),
-                        new Point(0,4),
+                        new Point(0, 1),
+                        new Point(0, 2),
+                        new Point(0, 3),
+                        new Point(0, 4),
                     ]
                 )
 
             });
         });
         describe('given a straight vertical line', function () {
-            const line = new Line(new Point(1, 6), new Point(4,6))
+            const line = new Line(new Point(1, 6), new Point(4, 6))
             it('should return all points on that line', function () {
                 const actual = line.allPointsOnFlatLine();
                 expect(actual).toEqual(
                     [
-                        new Point(1,6),
-                        new Point(2,6),
-                        new Point(3,6),
-                        new Point(4,6),
+                        new Point(1, 6),
+                        new Point(2, 6),
+                        new Point(3, 6),
+                        new Point(4, 6),
                     ]
                 )
             });
@@ -50,6 +50,11 @@ describe('day 14', function () {
 
             it('should place lines', function () {
                 expect(grid.getPointValue(new Point(498, 5))).toEqual('#')
+            });
+
+
+            it('should print', function () {
+                expect(grid.print(' ')).toMatchSnapshot()
             });
 
         });
