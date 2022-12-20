@@ -42,70 +42,72 @@ describe('day 13', function () {
                         id?: string,
                         left: number | ArrayOfNumbers,
                         right: number | ArrayOfNumbers,
-                        expectedToBeOrdered: 1 | 0 | -1
+                        expectedToBeOrdered?: boolean
                     }[] = [
                     {
                         id: 'ints',
                         left: 1,
                         right: 2,
-                        expectedToBeOrdered: 1
+                        expectedToBeOrdered: true
                     },
                     {
                         id: 'ints',
                         left: 1,
                         right: 1,
-                        expectedToBeOrdered: 0
+                        expectedToBeOrdered: undefined
                     },
                     {
                         left: 3,
                         right: 2,
-                        expectedToBeOrdered: -1
+                        expectedToBeOrdered: false
                     },
                     {
+                        id:'array-of-ints',
                         left: [1],
                         right: [2],
-                        expectedToBeOrdered: 1
+                        expectedToBeOrdered: true
                     },
                     {
+                        id: 'single-element-unordered',
                         left: [3],
                         right: [2],
-                        expectedToBeOrdered: -1
+                        expectedToBeOrdered: false
                     },
                     {
                         id: 'pair1',
                         left: parsedInput[0][0],
                         right: parsedInput[0][1],
-                        expectedToBeOrdered: 1
+                        expectedToBeOrdered: true
                     },
                     {
                         id: 'pair2',
                         left: parsedInput[1][0],
                         right: parsedInput[1][1],
-                        expectedToBeOrdered: 1
+                        expectedToBeOrdered: true
                     },
                     {
                         id: 'pair3',
                         left: parsedInput[2][0],
                         right: parsedInput[2][1],
-                        expectedToBeOrdered: -1
+                        expectedToBeOrdered: false
                     },
                     {
                         id: 'pair4',
                         left: parsedInput[3][0],
                         right: parsedInput[3][1],
-                        expectedToBeOrdered: 1
+                        expectedToBeOrdered: true
                     },
                     {
                         id: 'pair5',
                         left: parsedInput[4][0],
                         right: parsedInput[4][1],
-                        expectedToBeOrdered: -1
+                        expectedToBeOrdered: false
                     },
 
                 ]
 
                 testCases
-                    // .filter(x => x.id === 'pair2')
+                    .filter(x => x.id === 'pair2')
                     .forEach(testCase => {
                     const {id, left, right, expectedToBeOrdered} = testCase;
                     it(`${id} should compare pair ${left}, ${right} side by side`, function () {
