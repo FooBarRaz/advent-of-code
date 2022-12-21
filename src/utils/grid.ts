@@ -31,7 +31,7 @@ export class Point {
     }
 
     toString(): string {
-        return `(${this.row},${this.column})`
+        return `(${this._x},${this._y})`
     }
 
 }
@@ -123,30 +123,30 @@ export class Grid<T> {
     getPointAboveRight(point: Point) {
         let row = point.row -1;
         let column = point.column + 1;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointRight(point: Point) {
         let row = point.row;
         let column = point.column + 1;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointBelowRight(point: Point) {
         let row = point.row +1; let column = point.column + 1;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointBelow(point: Point) {
         let row = point.row + 1;
         let column = point.column;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointBelowLeft(point: Point) {
         let row = point.row + 1;
         let column = point.column -1;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointLeft(point: Point) {
