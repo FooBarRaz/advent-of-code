@@ -1,4 +1,12 @@
-import {ArrayOfNumbers, comparePair, isInOrder, NumberOrNumberArray, parseInput, problem1} from "./problemSolver";
+import {
+    ArrayOfNumbers,
+    comparePair,
+    isInOrder,
+    NumberOrNumberArray,
+    parseInput,
+    problem1,
+    problem2
+} from "./problemSolver";
 import {data} from "./data";
 
 const testInput = `[1,1,3,1,1]
@@ -150,4 +158,16 @@ describe('day 13', function () {
             expect(result).toBe(0)
         });
     })
+
+    describe('problem2', function () {
+        it('should sort packets, insert divider packets ', function () {
+            const result = problem2(testInput)
+            expect(result).toBe(13)
+        });
+
+        it('should work for real data', function () {
+            const result = problem2(data)
+            expect(result).toBe(22852)
+        });
+    });
 });
