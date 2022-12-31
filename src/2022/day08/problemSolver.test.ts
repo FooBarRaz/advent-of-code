@@ -1,6 +1,6 @@
-import {parseInput, problem2, VisibilityGrid} from "../problemSolver";
-import {Point} from "../../../utils/grid";
-import {data} from "../data";
+import {parseInput, problem2, VisibilityGrid} from "./problemSolver";
+import {Point} from "../../utils/grid";
+import {data} from "./data";
 
 const testInput = `30373
 25512
@@ -60,8 +60,8 @@ describe('day 08', function () {
 
         describe('scenic score', function () {
             it('should count the number of trees visible from each side of a cell and multiply them', function () {
-                expect(grid.scenicScore(new Point(1, 2,))).toEqual(4)
-                expect(grid.scenicScore(new Point(3, 2,))).toEqual(8)
+                expect(grid.scenicScore(new Point(2, 1,))).toEqual(4)
+                expect(grid.scenicScore(new Point(2, 3,))).toEqual(8)
             })
         });
     });
@@ -74,7 +74,7 @@ describe('day 08', function () {
 
         it('should count number of visible trees for real input', function () {
             const result = parseInput(data).countVisibleCells()
-            expect(result).toEqual(0)
+            expect(result).toEqual(1829)
         });
     });
 

@@ -56,42 +56,47 @@ export const machine = (numberOfKnots: number) => {
     const knot: () => Knot = () => ({
         position: new Point(0, 0),
         pointsVisited: {[new Point(0, 0).toString()]: 1},
-        closeDistance(target: Point): Point {
+        closeDistance(target: Point) {
             const from = this.position;
             const newPosition = () => {
                 const isOnSameRow = from.row === target.row
                 if (isOnSameRow) {
                     const isTargetOnLeft = target.column < from.column
                     if (isTargetOnLeft) {
-                        return new Point(from.row, target.column + 1)
+                        return new Point(from.x - 1, from.y)
                     }
-                    return new Point(from.row, target.column - 1)
+                    return new Point(from.x + 1, from.y)
                 }
                 const isInSameColumn = from.column === target.column
                 if (isInSameColumn) {
                     const isTargetIsAbove = target.row > from.row
                     if (isTargetIsAbove) {
-                        return new Point(target.row - 1, from.column)
+                        // move up
+                        return new Point(from.x, from.y + 1)
                     }
-                    return new Point(target.row + 1, from.column)
+                    // move down
+                    return new Point(from.x, from.y - 1)
                 }
                 const isUpAndLeft = target.row > from.row && target.column < from.column
                 if (isUpAndLeft) {
-                    // move one step diagonally to get closer
-                    return new Point(from.row + 1, from.column - 1)
+                    // move one step diagonally up and left to get closer
+                    return new Point(from.x - 1, from.y + 1)
                 }
                 const isUpAndRight = target.row > from.row && target.column > from.column
                 if (isUpAndRight) {
-                    return new Point(from.row + 1, from.column + 1)
+                    // move diagonally up and right
+                    return new Point(from.x + 1, from.y + 1)
                 }
                 const isDownAndLeft = target.row < from.row && target.column < from.column
                 if (isDownAndLeft) {
-                    return new Point(from.row - 1, from.column - 1)
+                    // move diagonally down and left
+                    return new Point(from.x - 1, from.y - 1)
                 }
                 // else is down and right
                 const isDownAndRight = target.row < from.row && target.column > from.column
                 if (isDownAndRight) {
-                    return new Point(from.row - 1, from.column + 1)
+                    // move diagonally down and right
+                    return new Point(from.x + 1, from.y - 1)
                 }
 
                 throw new Error('Unable to figure out next move')

@@ -1,4 +1,4 @@
-import {Line, parseInput, problem1, toGrid} from "./problemSolver";
+import {Line, parseInput, problem1, problem2, toGrid} from "./problemSolver";
 import {Point} from "../../utils/grid";
 import {data} from "./data";
 
@@ -69,6 +69,20 @@ describe('day 14', function () {
                 it('should solve', function () {
                     const result = problem1(data)
                     expect(result).toEqual(638)
+                });
+            });
+        });
+
+        describe('problem 2', function () {
+            it('should solve', function () {
+                const result = problem1(testInput)
+                expect(result).toEqual(24)
+            });
+
+            describe('given large dataset', function () {
+                it('should solve', function () {
+                    const result = problem2(testInput)
+                    expect(result).toEqual(94)
                 });
             });
         });

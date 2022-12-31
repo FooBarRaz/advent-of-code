@@ -24,7 +24,7 @@ describe('day 12', function () {
 
             it('should work for large input', function () {
                 const result = problem1(data)
-                expect(result).toEqual(0)
+                expect(result).toEqual(361)
             });
         });
     });

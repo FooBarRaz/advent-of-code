@@ -17,6 +17,12 @@ export class Point {
         return new Point(parseInt(x), parseInt(y))
     }
 
+    public get x() {
+        return this._x
+    }
+    public get y() {
+        return this._y
+    }
 
     public get row() {
         return this._y
@@ -82,7 +88,7 @@ export class Grid<T> {
     }
 
     getPointValue(point: Point): T {
-        return this.rows[point.row][point.column]
+        return this.rows[point.row]?.[point.column]
     }
 
     findCellByValue(val: T): Point {
@@ -114,51 +120,46 @@ export class Grid<T> {
         return adjacentCells.filter(x => x.value !== undefined)
     }
 
-    getPointAbove(point: Point) {
-        let row = point.row - 1;
-        let column = point.column;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+    getPointAbove(from: Point) {
+        const point = new Point(from.x, from.y + 1);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointAboveRight(point: Point) {
-        let row = point.row -1;
-        let column = point.column + 1;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+    getPointRight(from: Point){
+        const point = new Point(from.x + 1, from.y);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointRight(point: Point) {
-        let row = point.row;
-        let column = point.column + 1;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+    getPointBelow(from: Point) {
+        const point = new Point(from.x, from.y - 1);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointBelowRight(point: Point) {
-        let row = point.row +1; let column = point.column + 1;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+    getPointLeft(from: Point) {
+        const point = new Point(from.x - 1, from.y);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointBelow(point: Point) {
-        let row = point.row + 1;
-        let column = point.column;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+
+    getPointAboveRight(from: Point) {
+        const point = new Point(from.x + 1, from.y + 1);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointBelowLeft(point: Point) {
-        let row = point.row + 1;
-        let column = point.column -1;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+    getPointBelowRight(from: Point) {
+        const point = new Point(from.x + 1, from.y - 1);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointLeft(point: Point) {
-        let row = point.row;
-        let column = point.column - 1;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+    getPointBelowLeft(from: Point) {
+        const point = new Point(from.x - 1, from.y - 1);
+        return { value: this.getPointValue(point), point };
     }
 
-    getPointAboveLeft(point: Point) {
-        let row = point.row - 1;
-        let column = point.column - 1;
-        return { value: this.rows[row]?.[column], point: new Point(column, row) };
+
+    getPointAboveLeft(from: Point) {
+        const point = new Point(from.x - 1, from.y + 1);
+        return { value: this.getPointValue(point), point };
     }
 
     setCell(point: Point, value: T) {
@@ -176,7 +177,7 @@ export class Grid<T> {
     }
 }
 
-function vertexWithShortestDistance(vertices: Point[], distances: Record<string, number>) {
+export function vertexWithShortestDistance(vertices: Point[], distances: Record<string, number>) {
     return vertices
         .reduce((acc, vertex) => {
             if (distances[vertex.toString()] < distances[acc.toString()]) {

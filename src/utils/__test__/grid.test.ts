@@ -10,7 +10,7 @@ describe('grid', function () {
                     [3, 4, 5],
                     [6, 7, 8]
                 ])
-                const result = getShortestPath(grid, new Point(0, 0), new Point(2, 2))
+                const result = getShortestPath(grid, new Point(0, 2), new Point(2, 0))
                 expect(result.distance).toEqual(16)
                 expect(result.pathLength).toEqual(4)
             });
