@@ -1,4 +1,5 @@
-import {ArrayOfNumbers, comparePair, isInOrder, NumberOrNumberArray, parseInput} from "./problemSolver";
+import {ArrayOfNumbers, comparePair, isInOrder, NumberOrNumberArray, parseInput, problem1} from "./problemSolver";
+import {data} from "./data";
 
 const testInput = `[1,1,3,1,1]
 [1,1,5,1,1]
@@ -53,7 +54,7 @@ describe('day 13', function () {
                         id: 'ints',
                         left: 1,
                         right: 1,
-                        expectedToBeOrdered: true
+                        expectedToBeOrdered: undefined
                     },
                     {
                         left: 3,
@@ -137,4 +138,16 @@ describe('day 13', function () {
             });
         });
     });
+
+    describe('problem1', function () {
+        it('should return sum of indices of pairs that are in order', function () {
+            const result = problem1(testInput)
+            expect(result).toBe(13)
+        });
+
+        it('should work for real data', function () {
+            const result = problem1(data)
+            expect(result).toBe(0)
+        });
+    })
 });
