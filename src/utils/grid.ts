@@ -13,8 +13,8 @@ export class Point {
     }
 
     static fromString(stringPoint: string): Point {
-        const [row, column ] = stringPoint.replace('(', '').replace(')', '').split(',')
-        return new Point(parseInt(row), parseInt(column))
+        const [x, y] = stringPoint.replace('(', '').replace(')', '').split(',')
+        return new Point(parseInt(x), parseInt(y))
     }
 
 
@@ -75,7 +75,7 @@ export class Grid<T> {
 
     allPoints(): Point[] {
         let ts = this.rows.reduce((prev, row, rowIndex) => {
-            const points = row.map((_, columnIndex) => new Point(rowIndex, columnIndex))
+            const points = row.map((_, columnIndex) => new Point(columnIndex, rowIndex))
             return [...prev, ...points]
         }, []);
         return ts as Point[];
@@ -117,7 +117,7 @@ export class Grid<T> {
     getPointAbove(point: Point) {
         let row = point.row - 1;
         let column = point.column;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointAboveRight(point: Point) {
@@ -152,13 +152,13 @@ export class Grid<T> {
     getPointLeft(point: Point) {
         let row = point.row;
         let column = point.column - 1;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     getPointAboveLeft(point: Point) {
         let row = point.row - 1;
         let column = point.column - 1;
-        return { value: this.rows[row]?.[column], point: new Point(row, column) };
+        return { value: this.rows[row]?.[column], point: new Point(column, row) };
     }
 
     setCell(point: Point, value: T) {
@@ -210,12 +210,20 @@ export function getShortestPath(points: Grid<number>, start: Point, destination:
             const neighborString = neighbor.point.toString()
             const currentVertexString = currentVertex.toString()
             let distanceToNeighbor: number;
-            if (hillClimber && points.getPointValue(currentVertex) < points.getPointValue(currentVertex)) {
-                distanceToNeighbor = 0
-            }
-            else {
+            if (hillClimber) {
+                // if neighbor is within 1 step, we can go there
+                if (neighbor.value - points.getPointValue(currentVertex) <= 1) {
+                    distanceToNeighbor = distances[currentVertexString] + 1;
+                }
+                // if neighbor is higher, we can't go there
+                else {
+                    // if((neighbor.value - 1) > points.getPointValue(currentVertex)) {
+                    distanceToNeighbor = Number.MAX_VALUE
+                }
+            } else {
                 distanceToNeighbor = distances[currentVertexString] + points.getPointValue(neighbor.point);
             }
+
             if (distanceToNeighbor < distances[neighborString]) {
                 distances[neighborString] = distanceToNeighbor
             }

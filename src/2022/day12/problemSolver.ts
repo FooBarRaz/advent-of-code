@@ -34,5 +34,5 @@ export const parseInput = (input: string): HillGrid => {
 export const problem1 = (input: string) => {
     const grid = parseInput(input)
     const result = getShortestPath(grid, grid.startingPoint, grid.endingPoint, true)
-    return result.pathLength
+    return result.distance
 }

@@ -1,4 +1,5 @@
 import {parseInput, problem1} from "./problemSolver";
+import {data} from "./data";
 
 const testInput = `Sabqponm
 abcryxxl
@@ -20,8 +21,12 @@ describe('day 12', function () {
                 const result = problem1(testInput)
                 expect(result).toEqual(31)
             });
-        });
 
+            it('should work for large input', function () {
+                const result = problem1(data)
+                expect(result).toEqual(0)
+            });
+        });
     });
 
 });
