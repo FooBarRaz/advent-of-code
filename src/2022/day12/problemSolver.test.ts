@@ -1,4 +1,4 @@
-import {parseInput, problem1} from "./problemSolver";
+import {parseInput, problem1, problem2} from "./problemSolver";
 import {data} from "./data";
 
 const testInput = `Sabqponm
@@ -26,6 +26,19 @@ describe('day 12', function () {
                 const result = problem1(data)
                 expect(result).toEqual(0)
             });
+        });
+    });
+
+    describe('problem2', function () {
+
+        it('should find shortest path from any point at elevation 0', function () {
+            const result = problem2(testInput)
+            expect(result).toEqual(29)
+        });
+
+        it('should work for large input', function () {
+            const result = problem2(data)
+            expect(result).toEqual(354)
         });
     });
 
