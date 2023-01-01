@@ -75,14 +75,19 @@ describe('day 14', function () {
 
         describe('problem 2', function () {
             it('should solve', function () {
-                const result = problem1(testInput)
-                expect(result).toEqual(24)
+                const result = problem2(testInput)
+                expect(result).toEqual(93)
             });
 
             describe('given large dataset', function () {
                 it('should solve', function () {
                     const result = problem2(testInput)
-                    expect(result).toEqual(94)
+                    expect(result).toEqual(93)
+                });
+
+                it('should solve for large dataset', function () {
+                    const result = problem2(data)
+                    expect(result).toEqual(31722)
                 });
             });
         });

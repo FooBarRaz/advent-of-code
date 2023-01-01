@@ -60,62 +60,74 @@ export class Sandlot extends Grid<string> {
             return this.tickUntilBlocked(++timesTicked)
         } catch (e) {
             if (e.message === 'blocked') {
-                return timesTicked;
+                return this.tickUntilBlocked(++timesTicked)
             }
+            return timesTicked;
         }
     }
 
-
     private dropSand(point = this.origin) {
         this.setCell(point, 'o')
-        const pointBelow = this.getPointBelow(point)
-        if (this.willFallIntoAbyss(pointBelow)) {
+        const nextPoint = this.getPointAbove(point)
+        if (this.willFallIntoAbyss(nextPoint)) {
             throw new Error('falling-into-abyss')
         }
-        if(this.isBottomRow(pointBelow.point)){
+        if (this.isBottomRow(nextPoint.point)) {
             throw new Error('blocked')
         }
-        if (this.isUnobstructed(pointBelow)) {
+        if (this.isUnobstructed(nextPoint)) {
             this.setCell(point, '.')
-            this.dropSand(pointBelow.point)
+            this.dropSand(nextPoint.point)
         } else {
-            const pointBelowAndLeft = this.getPointBelowLeft(point)
+            const pointBelowAndLeft = this.getPointAboveLeft(point)
             if (this.isUnobstructed(pointBelowAndLeft)) {
                 this.setCell(point, '.')
                 this.dropSand(pointBelowAndLeft.point)
             } else {
-                const pointBelowAndRight = this.getPointBelowRight(point);
+                const pointBelowAndRight = this.getPointAboveRight(point);
                 if (this.isUnobstructed(pointBelowAndRight)) {
+                    // if the point is beyond current bounds, then add another column
+                    if (pointBelowAndRight.point.column >= this.dimensions.columns) {
+                        const newColumn = fillArray(this.dimensions.rows).map(() => '.')
+                        newColumn.pop()
+                        newColumn.push('#')
+                        this.addColumn(newColumn)
+                    }
                     this.setCell(point, '.')
                     this.dropSand(pointBelowAndRight.point)
-                } else {
-                    throw new Error('blocked')
                 }
             }
         }
     }
 
-    private isUnobstructed(pointBelow: { value: string; point: Point }): boolean {
-        return !['#', 'o'].includes(pointBelow.value);
+    private isUnobstructed(point: { value: string; point: Point }): boolean {
+        return !['#', 'o'].includes(point.value);
     }
 
-    private willFallIntoAbyss(pointBelow: { value: string; point: Point }) {
-        return !pointBelow.value
+    private willFallIntoAbyss(point: { value: string; point: Point }) {
+        return !point.value
     }
 
     private isBottomRow(point: Point) {
         return point.row === this.dimensions.rows - 1
     }
+
+    print(separator: string): string {
+        // slice off first 480 columns
+        const rows = this.rows.map(row => row.slice(480, row.length))
+        const message = rows.map(row => row.join('')).join('\n');
+        console.log(message)
+        return message;
+    }
 }
 
-export const
-    toGrid = (linesOfLines: Array<Array<Line>>): Grid<string> => {
+export const toGrid = (linesOfLines: Array<Array<Line>>): Grid<string> => {
         const allLines = linesOfLines.flatMap(lol => lol.flatMap(each => each))
         const allPoints = uniq((allLines.flatMap(line => [line.pointA, line.pointB])))
         const maxYValue = Math.max(...allPoints.map(pt => pt.row)) + 3
         const maxXValue = Math.max(...allPoints.map(pt => pt.column)) + 1
-        const grid = initializeGrid(maxYValue,maxXValue, '.')
-        const baseLine = new Line(new Point(0, maxYValue - 1), new Point(maxXValue -1, maxYValue - 1));
+        const grid = initializeGrid(maxYValue, maxXValue, '.')
+        const baseLine = new Line(new Point(0, maxYValue - 1), new Point(maxXValue - 1, maxYValue - 1));
         ([...allLines, baseLine]).forEach(line => {
             const allPoints = line.allPointsOnFlatLine()
             allPoints.forEach(pt => {
@@ -145,22 +157,21 @@ export const
     }
 
 export const problem1 = (input: string) => {
-        const lines = parseInput(input)
-        const grid = toGrid(lines)
-        const sandlot = new Sandlot(grid.rows, new Point(500, 0))
+    const lines = parseInput(input)
+    const grid = toGrid(lines)
+    const sandlot = new Sandlot(grid.rows, new Point(500, 0))
 
-        const result = sandlot.tickUntilAbyss()
-        // sandlot.tick(22)
-        sandlot.print(' ')
-        return result;
-    }
+    const result = sandlot.tickUntilAbyss()
+    sandlot.print(' ')
+    return result;
+}
 
-    export const problem2 = (input: string) => {
-      const lines = parseInput(input)
-        const grid = toGrid(lines)
-        const sandlot = new Sandlot(grid.rows, new Point(500, 0))
-        const result = sandlot.tickUntilBlocked()
+export const problem2 = (input: string) => {
+    const lines = parseInput(input)
+    const grid = toGrid(lines)
+    const sandlot = new Sandlot(grid.rows, new Point(500, 0))
+    const result = sandlot.tickUntilBlocked()
 
-        sandlot.print(' ')
-        return result;
-    }
+    sandlot.print(' ')
+    return result;
+}

@@ -166,6 +166,23 @@ export class Grid<T> {
       this.rows[point.row][point.column] = value
     }
 
+    addRow(row: Array<T>) {
+        if (row.length !== this.dimensions.columns) {
+            throw new Error('Invalid row size')
+        }
+        this.rows.push(row)
+    }
+
+    addColumn(column: Array<T>) {
+        if (column.length !== this.dimensions.rows) {
+            throw new Error('Invalid column size')
+        }
+        this._rows =  this.rows.map((row, index) => {
+            row.push(column[index])
+            return row
+        })
+    }
+
     print(separator = ',') {
         const text = this.rows.map(eachRow => eachRow.join(separator)).join('\n')
         console.log(text)
