@@ -1,8 +1,9 @@
 import {countValuesInRanges, mergeRanges, Point, Range} from "../../utils/grid";
 
-type SensorAndClosestBeacon = {
+export type SensorAndClosestBeacon = {
     [sensorLocation: string]: Point
 }
+
 
 const extractSensorData = (eachLine: string): SensorData => {
     const coords = /x=(-?\d+), y=(-?\d+).*x=(-?\d+), y=(-?\d+)/;
@@ -52,8 +53,8 @@ export const findXCoordinatesInRadiusAtRow = (sensor: Point, beacon: Point, row:
     }
 };
 
-export const positionsWithoutBeaconInRow = (sensorData: SensorAndClosestBeacon, row: number): number => {
-    const rowData: { sensorXPositions: Set<number>, beaconXPositions: Set<number>, inclusionRanges: Range[] } = Object.entries(sensorData)
+const analyzeRow: (sensorData: SensorAndClosestBeacon, row: number) => { inclusionRanges: Range[]; sensorXPositions: Set<number>; beaconXPositions: Set<number> } = (sensorData: SensorAndClosestBeacon, row: number) => {
+    return Object.entries(sensorData)
         .reduce((prev, [sensor, beacon]) => {
             const sensorLocation = Point.fromString(sensor);
             const inclusionRange = findXCoordinatesInRadiusAtRow(sensorLocation, beacon, row)
@@ -69,7 +70,32 @@ export const positionsWithoutBeaconInRow = (sensorData: SensorAndClosestBeacon, 
 
             return prev;
         }, {beaconXPositions: new Set<number>(), sensorXPositions: new Set<number>(), inclusionRanges: []})
+}
 
+export const positionsWithoutBeaconInRow = (sensorData: SensorAndClosestBeacon, row: number): number => {
+    const rowData = analyzeRow(sensorData, row)
     const pointsInRangeOfSensor = countValuesInRanges(...rowData.inclusionRanges)
     return pointsInRangeOfSensor - rowData.beaconXPositions.size - rowData.sensorXPositions.size
+}
+
+export const findPositionOfDistressSignal = (sensorData: SensorAndClosestBeacon, maxRows = 4000000): Point => {
+    // distress signal is in the only position not within range of another beacon
+    for (let row = 0; row < maxRows; row++) {
+        const rowData = analyzeRow(sensorData, row)
+        // add sensors and beacons to range
+        const sensorsAsRanges = [];
+        const beaconsAsRanges = [];
+        rowData.sensorXPositions.forEach(sensorX => sensorsAsRanges.push({min: sensorX, max: sensorX}))
+        rowData.beaconXPositions.forEach(beaconX => beaconsAsRanges.push({min: beaconX, max: beaconX}))
+        const fullRange =  mergeRanges(...rowData.inclusionRanges, ...sensorsAsRanges, ...beaconsAsRanges)
+        if (fullRange.length > 1) {
+            // assume signal is between max and min of the two ranges
+            const signalX = fullRange.sort((a, b) => a.min - b.min)[0].max + 1
+            return new Point(signalX, row)
+        }
+    }
+}
+
+export const tuningFrequency = (point: Point, mutiplier = 4000000): number => {
+    return point.x * mutiplier + point.y
 }

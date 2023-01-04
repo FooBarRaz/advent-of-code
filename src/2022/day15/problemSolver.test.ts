@@ -1,7 +1,9 @@
 import {
+    findPositionOfDistressSignal,
+    findXCoordinatesInRadiusAtRow,
     getManhattanDistance,
     parseInput,
-    positionsWithoutBeaconInRow,
+    positionsWithoutBeaconInRow, SensorAndClosestBeacon, tuningFrequency,
 } from "./problemSolver";
 import {Point} from "../../utils/grid";
 import {data} from "./data";
@@ -74,33 +76,6 @@ describe('positionsWithoutBeacon', function () {
             });
         });
 
-
-        describe('given a sensor and closest beacon', function () {
-            it('should find all points that cannot possibly have a beacon', function () {
-                const sensor = new Point(8, 7)
-                const beacon = new Point(2, 10)
-                const result = positionsWithoutBeacon(sensor, beacon, allPoints)
-
-                // should not contain sensor
-                expect(result).not.toContainEqual(sensor)
-                expect(result).not.toContainEqual(beacon)
-
-                // top tip
-                expect(result).toContainEqual(new Point(8, -2))
-                expect(result).not.toContainEqual(new Point(7, -2))
-                expect(result).not.toContainEqual(new Point(9, -2))
-
-                // left middle tip
-                expect(result).toContainEqual(new Point(-1, 7))
-                expect(result).not.toContainEqual(new Point(-2, 7))
-
-                // right middle tip
-                expect(result).toContainEqual(new Point(17, 7))
-                expect(result).not.toContainEqual(new Point(18, 7))
-
-                expect(result).toContainEqual(new Point(8, 16))
-            });
-        });
     });
 
     describe('findYCoordinatesInRadiusAtRow', function () {
@@ -117,14 +92,32 @@ describe('positionsWithoutBeacon', function () {
                 it(`should return range of y coordinates at a row ${row}`, function () {
                     const sensor = new Point(0, 0)
                     const beacon = new Point(0, distance)
-                    const result = findYCoordinatesInRadiusAtRow(sensor, beacon, row)
+                    const result = findXCoordinatesInRadiusAtRow(sensor, beacon, row)
                     expect(result.min).toEqual(-9)
                     expect(result.max).toEqual(9)
                 });
             });
         });
-
-
     });
 });
+
+describe('problem2', function () {
+    const testData = parseInput(testInput)
+    it('should find position of distress beacon', function () {
+        const result = findPositionOfDistressSignal(testData, 20)
+        expect(result).toEqual(new Point(14, 11))
+    });
+
+    it('should do it for big dataset', function () {
+        const result = findPositionOfDistressSignal(parseInput(data), 4000000)
+        expect(result).toEqual(new Point(3257428, 2573243))
+    });
+
+    it('should calculate tuning frequency', function () {
+        const point = new Point(3257428, 2573243)
+        const result = tuningFrequency(point)
+        expect(result).toEqual(4000000)
+    });
+});
+
 
