@@ -11,7 +11,7 @@ export const setupNewDay = async (basePath: string, year: string, day: string) =
     fetchInput(year, parseInt(day).toString())
         .then(input => {
             fs.writeFileSync(`${path}/problemSolver.ts`, '');
-            fs.writeFileSync(`${path}/data.ts`, `export const data = \`${input}\``)
+            fs.writeFileSync(`${path}/data.ts`, `export const data = \`${input.trim()}\``)
             fs.writeFileSync(`${path}/problemSolver.test.ts`, '');
             const fileTree = tree(path, {trailingSlash: true});
             console.log(fileTree);
