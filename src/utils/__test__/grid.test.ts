@@ -1,5 +1,34 @@
-import {getShortestPath, Grid, Point} from "../grid";
+import {getShortestPath, Grid, mergeRanges, Point} from "../grid";
 
+
+describe('mergeRanges', function () {
+    const testCases = [
+        {
+            ranges: [{min: 0, max: 5}, { min: 3, max: 10 }],
+            expected: [{min: 0, max: 10}]
+        },
+        {
+            ranges: [{min: 0, max: 5}, { min: 5, max: 8}],
+            expected: [{min: 0, max: 8}]
+        },
+        {
+            ranges: [{min: 0, max: 5}, { min: 6, max: 8}],
+            expected: [{min: 0, max: 5}, {min: 6, max: 8}]
+        },
+        {
+            ranges: [{min: 10, max: 20}],
+            expected: [{min: 10, max: 20}]
+        }
+    ]
+
+testCases.forEach(({ranges, expected}) => {
+    it(`should merge ${JSON.stringify(ranges)}`, function () {
+        const result = mergeRanges(...ranges)
+        expect(result).toEqual(expected)
+    });
+});
+
+});
 describe('grid', function () {
     describe('getShortestPath', function () {
 

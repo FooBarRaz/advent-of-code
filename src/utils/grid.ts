@@ -257,3 +257,31 @@ export function getShortestPath(points: Grid<number>, start: Point, destination:
 export const getShortestPathDistance = (points: ChitonGrid, start: Point, destination: Point) => {
     return getShortestPath(points, start, destination).distance;
 }
+
+export type Range = {
+    min: number,
+    max: number
+}
+
+
+
+export const mergeRanges = (...ranges: Range[]): Range[] => {
+    const sortedRanges = ranges.sort((a, b) => a.min - b.min);
+    const mergedRanges: Range[] = [];
+    let currentRange = sortedRanges[0];
+    for (let i = 1; i < sortedRanges.length; i++) {
+        const nextRange = sortedRanges[i];
+        if (nextRange.min <= currentRange.max) {
+            currentRange.max = Math.max(currentRange.max, nextRange.max);
+        } else {
+            mergedRanges.push(currentRange);
+            currentRange = nextRange;
+        }
+    }
+    mergedRanges.push(currentRange);
+    return mergedRanges;
+}
+
+export const countValuesInRanges = (...ranges: Range[]): number => {
+    return ranges.reduce((acc, range) => acc + (range.max - range.min + 1), 0)
+}
