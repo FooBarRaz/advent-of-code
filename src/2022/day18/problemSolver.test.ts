@@ -1,4 +1,9 @@
-import {GridPosition3D, parseInput, totalSurfaceArea} from "./problemSolver";
+import {
+    calculateSurfaceArea,
+    GridPosition3D,
+    parseInput,
+    totalSurfaceArea
+} from "./problemSolver";
 import {data} from "./data";
 
 const generalInput = `2,2,2
@@ -81,7 +86,6 @@ describe('day 18', function () {
                 left: GridPosition3D.fromObject({x: 1, y: 1, z: 1}),
                 right: GridPosition3D.fromObject({x: 2, y: 1, z: 1}),
                 areTouching: true,
-                numberOfExposedSides: 10
             },
             {
                 left: GridPosition3D.fromObject({x: 1, y: 1, z: 1}),
@@ -121,18 +125,61 @@ describe('day 18', function () {
             }
         ]
 
-        testCases.forEach(({left, right, areTouching, numberOfExposedSides}) => {
+        testCases.forEach(({left, right, areTouching}) => {
             describe(`for cubes ${left} & ${right}`, function () {
 
                 it(`should return areTouching as ${areTouching}`, function () {
                     expect(left.isTouching(right)).toBe(areTouching)
                 });
+            });
+        });
 
-                if (numberOfExposedSides) {
-                    it('should calculate the number of exposed sides', function () {
-                        expect(totalSurfaceArea([left, right])).toBe(numberOfExposedSides)
-                    });
+        describe('isTouchingOutside', function () {
+            const testCases = [
+                {
+                    description: 'in front on x axis',
+                    thisCube: GridPosition3D.fromString('1,1,1'),
+                    otherCube: GridPosition3D.fromString('2,1,1'),
+                    isTouchingOutside: true
+                },
+                {
+                    description: 'behind on x axis',
+                    thisCube: GridPosition3D.fromString('2,1,1'),
+                    otherCube: GridPosition3D.fromString('1,1,1'),
+                    isTouchingOutside: false
+                },
+                {
+                    description: 'in front on y axis',
+                    thisCube: GridPosition3D.fromString('1,1,1'),
+                    otherCube: GridPosition3D.fromString('1,2,1'),
+                    isTouchingOutside: true
+                },
+                {
+                    description: 'behind on y axis',
+                    thisCube: GridPosition3D.fromString('1,2,1'),
+                    otherCube: GridPosition3D.fromString('1,1,1'),
+                    isTouchingOutside: false
+                },
+                {
+                    description: 'in front on z axis',
+                    thisCube: GridPosition3D.fromString('1,1,1'),
+                    otherCube: GridPosition3D.fromString('1,1,2'),
+                    isTouchingOutside: true
+                },
+                {
+                    description: 'behind on z axis',
+                    thisCube: GridPosition3D.fromString('1,1,2'),
+                    otherCube: GridPosition3D.fromString('1,1,1'),
+                    isTouchingOutside: false
                 }
+            ]
+
+            testCases.forEach(({description, thisCube, otherCube, isTouchingOutside}) => {
+                describe(description, function () {
+                    it(`should return ${isTouchingOutside}`, function () {
+                        expect(thisCube.isTouchingOutside(otherCube)).toBe(isTouchingOutside)
+                    });
+                });
             });
         });
 
@@ -146,11 +193,6 @@ describe('day 18', function () {
                         GridPosition3D.fromString('2,1,1'),
                     ],
                     expectedExposedSides: 10
-                },
-                {
-                    description: 'general input',
-                    cubes: parseInput(generalInput),
-                    expectedExposedSides: 64
                 },
                 {
                     description: '2 cubes on same column',
@@ -218,24 +260,87 @@ describe('day 18', function () {
                     expectedExposedSides: 16
                 },
                 {
+                    description: '2x2x2 cube',
+                    cubes: [
+                        GridPosition3D.fromString('1,1,1'),
+                        GridPosition3D.fromString('1,2,1'),
+                        GridPosition3D.fromString('2,1,1'),
+                        GridPosition3D.fromString('2,2,1'),
+                        GridPosition3D.fromString('1,1,2'),
+                        GridPosition3D.fromString('1,2,2'),
+                        GridPosition3D.fromString('2,1,2'),
+                        GridPosition3D.fromString('2,2,2'),
+                    ],
+                    expectedExposedSides: 24
+                },
+                {
+                    description: 'hollow 3x3x3 cube',
+                    cubes: [
+                        GridPosition3D.fromString('1,1,1'),
+                        GridPosition3D.fromString('1,2,1'),
+                        GridPosition3D.fromString('1,3,1'),
+                        GridPosition3D.fromString('2,1,1'),
+                        GridPosition3D.fromString('2,2,1'),
+                        GridPosition3D.fromString('2,3,1'),
+                        GridPosition3D.fromString('3,1,1'),
+                        GridPosition3D.fromString('3,2,1'),
+                        GridPosition3D.fromString('3,3,1'),
+                        GridPosition3D.fromString('1,1,2'),
+                        GridPosition3D.fromString('1,2,2'),
+                        GridPosition3D.fromString('1,3,2'),
+                        GridPosition3D.fromString('2,1,2'),
+                        // GridPosition3D.fromString('2,2,2'),
+                        GridPosition3D.fromString('2,3,2'),
+                        GridPosition3D.fromString('3,1,2'),
+                        GridPosition3D.fromString('3,2,2'),
+                        GridPosition3D.fromString('3,3,2'),
+                        GridPosition3D.fromString('1,1,3'),
+                        GridPosition3D.fromString('1,2,3'),
+                        GridPosition3D.fromString('1,3,3'),
+                        GridPosition3D.fromString('2,1,3'),
+                        GridPosition3D.fromString('2,2,3'),
+                        GridPosition3D.fromString('2,3,3'),
+                        GridPosition3D.fromString('3,1,3'),
+                        GridPosition3D.fromString('3,2,3'),
+                        GridPosition3D.fromString('3,3,3'),
+                    ],
+                    expectedExposedSides: 60,
+                    expectedExteriorSurfaceArea: 54
+                },
+                {
+                    description: 'general input',
+                    cubes: parseInput(generalInput),
+                    expectedExposedSides: 64,
+                    expectedExteriorSurfaceArea: 58
+                },
+                {
                     description: 'my input',
                     cubes: parseInput(data),
-                    expectedExposedSides: 3412
+                    expectedExposedSides: 3412,
+                    expectedExteriorSurfaceArea: 591,
                 },
                 {
                     description: 'sample input',
                     cubes: parseInput(sampleInput),
-                    expectedExposedSides: 108
+                    expectedExposedSides: 108,
+                    expectedExteriorSurfaceArea: 90,
                 }
             ]
 
             testCases
                 // .filter((each, index)=> index === testCases.length -1)
-                .forEach(({description, cubes, expectedExposedSides}) => {
-                it(`should find exposed sides for ${description}`, function () {
-                    expect(totalSurfaceArea(cubes)).toBe(expectedExposedSides)
-                })
-            })
+                .forEach(({description, cubes, expectedExposedSides, expectedExteriorSurfaceArea}) => {
+                    describe(description, function () {
+                        it(`should find exposed sides for ${description}`, function () {
+                            expect(totalSurfaceArea(cubes)).toBe(expectedExposedSides)
+                        })
+                        if (expectedExteriorSurfaceArea !== undefined) {
+                            it('should find exterior surface area', function () {
+                                expect(calculateSurfaceArea(cubes)).toBe(expectedExteriorSurfaceArea)
+                            });
+                        }
+                    });
+                });
         });
     });
 });
