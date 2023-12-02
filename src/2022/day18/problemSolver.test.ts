@@ -5,6 +5,7 @@ import {
     totalSurfaceArea
 } from "./problemSolver";
 import {data} from "./data";
+import {getOuterSurfaces, parseVoxels} from "./x";
 
 const generalInput = `2,2,2
 1,2,2
@@ -317,7 +318,7 @@ describe('day 18', function () {
                     description: 'my input',
                     cubes: parseInput(data),
                     expectedExposedSides: 3412,
-                    expectedExteriorSurfaceArea: 591,
+                    expectedExteriorSurfaceArea: 2018,
                 },
                 {
                     description: 'sample input',
@@ -338,9 +339,16 @@ describe('day 18', function () {
                             it('should find exterior surface area', function () {
                                 expect(calculateSurfaceArea(cubes)).toBe(expectedExteriorSurfaceArea)
                             });
+
                         }
                     });
                 });
+        });
+    });
+
+    describe('someone elses solution', function () {
+        it('should ', function () {
+            expect(getOuterSurfaces(parseVoxels(data))).toEqual(0)
         });
     });
 });

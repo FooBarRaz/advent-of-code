@@ -95,29 +95,73 @@ export type Coordinate = [number, number, number];
 //
 //     return surfaceArea;
 // }
-export function calculateSurfaceArea(coords: GridPosition3D[]): number {
-    let surfaceArea = 0;
+// export function calculateSurfaceArea(coords: GridPosition3D[]): number {
+//     let surfaceArea = 0;
+//
+//     for (const coord of coords) {
+//         for (let i = 0; i < 3; i++) {
+//             for (let j = -1; j <= 1; j += 2) {
+//                 const tempCoord = { ...coord };
+//                 tempCoord[['x', 'y', 'z'][i]] += j;
+//
+//                 // Check if the adjacent cube is occupied
+//                 const isAdjacentCubeOccupied = coords.some(c => c.x === tempCoord.x && c.y === tempCoord.y && c.z === tempCoord.z);
+//
+//                 // Check if the adjacent cube is not surrounded by other cubes in all dimensions
+//                 const isAdjacentCubeSurrounded = coords.some(c => c.x === tempCoord.x && c.y === tempCoord.y && c.z !== tempCoord.z) &&
+//                     coords.some(c => c.x === tempCoord.x && c.y !== tempCoord.y && c.z === tempCoord.z) &&
+//                     coords.some(c => c.x !== tempCoord.x && c.y === tempCoord.y && c.z === tempCoord.z);
+//
+//                 if (!isAdjacentCubeOccupied && !isAdjacentCubeSurrounded) {
+//                     surfaceArea++;
+//                 }
+//             }
+//         }
+//     }
+//
+//     return surfaceArea;
+// }
 
-    for (const coord of coords) {
+type Coordinates = { x: number, y: number, z: number };
+
+interface Shape {
+    coords: Coordinates[];
+    visited: boolean[];
+    surfaceArea: number;
+}
+
+export function calculateSurfaceArea(coords: Coordinates[]): number {
+    const shape: Shape = { coords, visited: coords.map(() => false), surfaceArea: 0 };
+    for (let i = 0; i < coords.length; i++) {
+        if (!shape.visited[i]) {
+            shape.surfaceArea += floodFill(shape, i);
+        }
+    }
+    return shape.surfaceArea;
+}
+
+function floodFill(shape: Shape, index: number): number {
+    const queue: number[] = [index];
+    let surfaceArea = 0;
+    while (queue.length > 0) {
+        const coordIndex = queue.shift()!;
+        const coord = shape.coords[coordIndex];
+        if (shape.visited[coordIndex]) {
+            continue;
+        }
+        shape.visited[coordIndex] = true;
         for (let i = 0; i < 3; i++) {
             for (let j = -1; j <= 1; j += 2) {
                 const tempCoord = { ...coord };
                 tempCoord[['x', 'y', 'z'][i]] += j;
-
-                // Check if the adjacent cube is occupied
-                const isAdjacentCubeOccupied = coords.some(c => c.x === tempCoord.x && c.y === tempCoord.y && c.z === tempCoord.z);
-
-                // Check if the adjacent cube is not surrounded by other cubes in all dimensions
-                const isAdjacentCubeSurrounded = coords.some(c => c.x === tempCoord.x && c.y === tempCoord.y && c.z !== tempCoord.z) &&
-                    coords.some(c => c.x === tempCoord.x && c.y !== tempCoord.y && c.z === tempCoord.z) &&
-                    coords.some(c => c.x !== tempCoord.x && c.y === tempCoord.y && c.z === tempCoord.z);
-
-                if (!isAdjacentCubeOccupied && !isAdjacentCubeSurrounded) {
+                const adjacentCoordIndex = shape.coords.findIndex(c => c.x === tempCoord.x && c.y === tempCoord.y && c.z === tempCoord.z);
+                if (adjacentCoordIndex >= 0 && !shape.visited[adjacentCoordIndex]) {
+                    queue.push(adjacentCoordIndex);
+                } else {
                     surfaceArea++;
                 }
             }
         }
     }
-
     return surfaceArea;
 }
