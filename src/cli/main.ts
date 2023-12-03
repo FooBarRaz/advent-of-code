@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import {setupNewDay} from "../scripts/directory-setup";
+import {setupNewDay} from "../../scripts/directory-setup";
 
 const program = new Command()
 
@@ -12,6 +12,5 @@ program
     .action((basePath, {day, year}) => {
         setupNewDay(basePath, year, day)
     });
-
 
 program.parse();
