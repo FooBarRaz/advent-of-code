@@ -1,7 +1,5 @@
 import {countIncreases, solveProblem1, solveProblem2, threeples} from "../day1";
 import {data} from "../data";
-import {sum} from "../../../utils/listOps";
-import {parseNumbers} from "../../../utils/dataReader";
 
 describe('day1', function () {
 

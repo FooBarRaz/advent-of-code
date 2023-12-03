@@ -8,8 +8,6 @@ import {
     solveProblem2
 } from "../day8";
 import {data} from "../data";
-import {privateDecrypt} from "crypto";
-import {splitLines} from "../../../utils/dataReader";
 
 describe('Day 8', function () {
     const testData = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe

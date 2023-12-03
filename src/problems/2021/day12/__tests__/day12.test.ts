@@ -1,6 +1,5 @@
-import {Cave, Path, findPathBetween, parseInput, findDistinctPaths, findDistinctPaths2} from "../day12";
-import exp from "constants";
 import {data} from "../data";
+import { Cave, findDistinctPaths, findDistinctPaths2, parseInput } from "../day12";
 
 
 describe('Day 12', function () {

@@ -1,5 +1,5 @@
-import {splitLines} from "../../utils/dataReader";
-import {fillArray, sum} from "../../utils/listOps";
+import {splitLines} from "../../../utils/dataReader";
+import {fillArray, sum} from "../../../utils/listOps";
 
 type Line = Array<number>
 

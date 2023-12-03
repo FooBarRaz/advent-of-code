@@ -1,4 +1,4 @@
-import {groupBy} from "../../utils/listOps";
+import {groupBy} from "../../../utils/listOps";
 
 type NoOp = {
     type: 'noop'

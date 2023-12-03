@@ -1,6 +1,6 @@
-import {splitLines} from "../../utils/dataReader";
-import {sum} from "../../utils/listOps";
 import {nanoid} from 'nanoid'
+import { splitLines } from '../../../utils/dataReader';
+import { sum } from '../../../utils/listOps';
 
 export type Cell = {
     row: number;

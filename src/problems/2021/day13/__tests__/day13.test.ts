@@ -1,6 +1,6 @@
 import {countDots, foldLeft, foldUp, solveProblem2, toGrid, toPoints} from "../day13";
-import {Point} from "../../../utils/grid";
 import {data} from "../data";
+import { Point } from "../../../../utils/grid";
 
 describe('Day 13', function () {
     const testData = `6,10

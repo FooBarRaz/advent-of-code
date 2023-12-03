@@ -1,6 +1,4 @@
 import {
-    ArrayOfNumbers,
-    comparePair,
     isInOrder,
     NumberOrNumberArray,
     parseInput,

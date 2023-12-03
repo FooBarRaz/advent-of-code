@@ -1,6 +1,6 @@
-import {splitLines} from "../../utils/dataReader";
+import {splitLines} from "../../../utils/dataReader";
 import {each} from "lodash";
-import {sum} from "../../utils/listOps";
+import {sum} from "../../../utils/listOps";
 
 const charSets = {
     '(': ')',

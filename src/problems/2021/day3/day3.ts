@@ -1,5 +1,5 @@
-import {fillArray} from "../../utils/listOps";
-import {splitLines} from "../../utils/dataReader";
+import {fillArray} from "../../../utils/listOps";
+import {splitLines} from "../../../utils/dataReader";
 
 type DiagnosticReport = {
     gamma: number

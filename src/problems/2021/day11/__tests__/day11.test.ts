@@ -1,8 +1,5 @@
-import {Grid} from "../../../utils/grid";
-import {doStep, Octopus, OctopusGrid, parseInput, solveProblem1, solveProblem2} from "../day11";
-import {splitLines} from "../../../utils/dataReader";
-import {fillArray} from "../../../utils/listOps";
 import {data} from "../data";
+import { parseInput, OctopusGrid, doStep, solveProblem1, solveProblem2 } from "../day11";
 
 describe('Day 11', function () {
     const testData = `5483143223

@@ -1,4 +1,4 @@
-import {splitLines} from "../../utils/dataReader";
+import {splitLines} from "../../../utils/dataReader";
 
 type MovementType = 'forward' | 'up' | 'down'
 

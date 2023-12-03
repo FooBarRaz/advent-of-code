@@ -43,7 +43,7 @@ describe('day 11', function () {
     describe('round', function () {
         it('should run a round', function () {
             const testMonkeys = generateTestMonkeys()
-            const result = round(testMonkeys, true)
+            const result = round(testMonkeys, 1)
             /**
              * Monkey 0: 20, 23, 27, 26
 Monkey 1: 2080, 25, 167, 207, 401, 1046

@@ -1,6 +1,6 @@
-import {Grid, Point} from "../../utils/grid";
-import {splitLines} from "../../utils/dataReader";
-import {fillArray} from "../../utils/listOps";
+import {Grid, Point} from "../../../utils/grid";
+import {splitLines} from "../../../utils/dataReader";
+import {fillArray} from "../../../utils/listOps";
 
 export class OctopusGrid extends Grid<Octopus> {
     private _flashCount: number;

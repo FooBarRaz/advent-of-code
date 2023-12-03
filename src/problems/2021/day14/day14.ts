@@ -1,5 +1,4 @@
-import {splitLines} from "../../utils/dataReader";
-import {polymerTemplate} from "./data";
+import {splitLines} from "../../../utils/dataReader";
 
 export const getPairs = (input: string): string[] => {
     return input.split('').reduce((prev, curr, index, originalArray) => {
@@ -107,13 +106,13 @@ function doTheThing(polymerTemplate: string, insertionRules: InsertionRules, ite
     const lettersByOccurrence = Object.entries(firstPass).reduce((prev, [letter, count]) => {
         return {
             ...prev,
-            [letter]: Math.floor(count / 2)
+            [letter]: Math.floor(count as number / 2)
         }
     }, {...firstPass});
 
 
-    const mostFrequentlyOccurringValue = Math.max(...Object.values(lettersByOccurrence))
-    const leastFrequentlyOccurringValue = Math.min(...Object.values(lettersByOccurrence))
+    const mostFrequentlyOccurringValue = Math.max(...Object.values(lettersByOccurrence) as number[])
+    const leastFrequentlyOccurringValue = Math.min(...Object.values(lettersByOccurrence) as number[])
     return mostFrequentlyOccurringValue - leastFrequentlyOccurringValue;
 }
 

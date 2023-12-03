@@ -1,4 +1,4 @@
-import {binaryToNumber} from "../../utils/numbers";
+import {binaryToNumber} from "../../../utils/numbers";
 
 export const decodePacket = (binaryString: string) => {
     const versionAsBinary = binaryString.slice(0, 3)

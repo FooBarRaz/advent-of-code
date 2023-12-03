@@ -1,5 +1,5 @@
-import { readFile } from '../../utils/dataReader';
 import * as yup from 'yup';
+import { readFile } from '../../../utils/dataReader';
 
 export type PassportInfo = {
     hgt: string

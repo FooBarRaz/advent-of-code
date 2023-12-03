@@ -1,4 +1,4 @@
-import {fillRange} from "../../utils/listOps";
+import {fillRange} from "../../../utils/listOps";
 
 export const parseInput = (input: string) => {
     const [min, max] = input.split('-').map(each => Number.parseInt(each))

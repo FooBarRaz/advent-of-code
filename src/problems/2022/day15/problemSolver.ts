@@ -1,4 +1,5 @@
-import {countValuesInRanges, mergeRanges, Point, Range} from "../../utils/grid";
+import { Point, mergeRanges, countValuesInRanges } from "../../../utils/grid";
+import { Range } from "../../../utils/grid";
 
 export type SensorAndClosestBeacon = {
     [sensorLocation: string]: Point

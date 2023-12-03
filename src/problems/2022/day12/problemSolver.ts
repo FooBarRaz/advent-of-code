@@ -1,4 +1,4 @@
-import {getShortestPath, getShortestPathDistance, Grid, Point, vertexWithShortestDistance} from "../../utils/grid";
+import { Point, getShortestPath, Grid, vertexWithShortestDistance } from "../../../utils/grid";
 import {ChitonGrid} from "../../2021/day15/problemSolver";
 
 const CHAR_CODE_BASE = 97;

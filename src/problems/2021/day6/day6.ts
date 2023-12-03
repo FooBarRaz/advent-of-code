@@ -1,4 +1,4 @@
-import {fillArray, sum} from "../../utils/listOps";
+import {fillArray, sum} from "../../../utils/listOps";
 import {number} from "yup";
 
 let lanterfishIds = 0

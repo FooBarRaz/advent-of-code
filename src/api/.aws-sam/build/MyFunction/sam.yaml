@@ -1,0 +1,23 @@
+Resources:
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      DefinitionBody:
+        'Fn::Transform':
+          Name: 'AWS::Include'
+          Parameters:
+            Location: 'web/api-spec.yaml'
+
+  MyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Events:
+        MyApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MyApi
+            Path: /{year}/{day}
+            Method: post

@@ -1,4 +1,4 @@
-import {Grid, Point} from "../../utils/grid";
+import { Grid, Point } from "../../../utils/grid";
 
 export class VisibilityGrid extends Grid<number> {
 

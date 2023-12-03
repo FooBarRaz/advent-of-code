@@ -1,5 +1,5 @@
-import {splitLines} from "../../utils/dataReader";
-import {fillArray} from "../../utils/listOps";
+import {splitLines} from "../../../utils/dataReader";
+import {fillArray} from "../../../utils/listOps";
 
 export type Point = {
     x: number

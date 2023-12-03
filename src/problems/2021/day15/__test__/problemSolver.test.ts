@@ -1,6 +1,6 @@
+import { Point, getShortestPathDistance } from "../../../../utils/grid";
 import {data} from "../data";
 import {parseData} from "../problemSolver";
-import {getShortestPathDistance, Point} from "../../../utils/grid";
 
 describe('data parsing', function () {
     it('should parse out each line of data', function () {

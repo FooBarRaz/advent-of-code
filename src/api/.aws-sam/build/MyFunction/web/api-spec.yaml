@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Advent of Code Solver API
+  version: 1.0.0
+  description: API to solve Advent of Code problems
+servers:
+  - url: http://localhost:8080/v1
+paths:
+  /{year}/{day}:
+    post:
+      summary: Solve a specific Advent of Code problem
+      description: Returns solutions for both parts of the specified day's problem.
+      parameters:
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: day
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProblemInput'
+      responses:
+        '200':
+          description: Successful response with solutions for both problems
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemSolutionResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Error processing the request
+components:
+  schemas:
+    ProblemInput:
+      type: object
+      required:
+        - input
+      properties:
+        input:
+          type: string
+    ProblemSolutionResponse:
+      type: object
+      properties:
+        problem1:
+          type: string
+        problem2:
+          type: string

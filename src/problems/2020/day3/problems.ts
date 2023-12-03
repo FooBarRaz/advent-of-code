@@ -1,4 +1,4 @@
-import { readLines } from '../../utils/dataReader';
+import { readLines } from "../../../utils/dataReader";
 
 const TREE = '#'
 

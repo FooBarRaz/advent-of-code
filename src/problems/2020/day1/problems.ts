@@ -1,4 +1,4 @@
-import { readFile } from '../../utils/dataReader';
+import { readFile } from "../../../utils/dataReader";
 
 const splitLines = (content: string): Array<string> => content.split('\n');
 

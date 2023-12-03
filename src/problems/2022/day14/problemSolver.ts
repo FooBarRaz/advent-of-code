@@ -1,6 +1,6 @@
-import {Grid, initializeGrid, Point} from "../../utils/grid";
 import {uniq} from "lodash";
-import {fillArray} from "../../utils/listOps";
+import { Point, Grid, initializeGrid } from "../../../utils/grid";
+import { fillArray } from "../../../utils/listOps";
 
 export class Line {
     constructor(public readonly pointA: Point,

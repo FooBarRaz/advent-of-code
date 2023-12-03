@@ -1,4 +1,3 @@
-import {splitLines} from "../../../utils/dataReader";
 import {
     epsilonRate,
     gammaRate,
@@ -8,6 +7,7 @@ import {
     solveProblem1, solveProblem2
 } from "../day3";
 import {data} from "../data";
+import { splitLines } from "../../../../utils/dataReader";
 
 describe('Day 3', function () {
     describe('getMostCommonBit', function () {

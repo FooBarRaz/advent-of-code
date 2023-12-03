@@ -1,4 +1,4 @@
-import {Program} from "../../utils/intcode";
+import {Program} from "../../../utils/intcode";
 
 const updateInstructions = (value, index) => {
         if (index === 1) {

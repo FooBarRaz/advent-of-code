@@ -1,4 +1,4 @@
-import {Grid, Point} from "../../utils/grid";
+import { Grid, Point } from "../../../utils/grid";
 
 type DijkstraNode = {
     point: Point

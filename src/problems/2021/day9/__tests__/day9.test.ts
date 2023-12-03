@@ -5,7 +5,7 @@ import {
     findLowPoints,
     getAdjacentValues,
     parseInput,
-    solveProblem1, findLargestBasin, solveProblem2
+    solveProblem1, solveProblem2
 } from "../day9";
 import {data} from "../data";
 

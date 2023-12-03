@@ -1,4 +1,4 @@
-import {Grid, Point} from "../../utils/grid";
+import {Grid, Point} from "../../../utils/grid";
 
 type Direction = 'U' | 'D' | 'L' | 'R';
 type Movement = {
@@ -166,7 +166,7 @@ export const machine = (numberOfKnots: number) => {
         const rows = Array(gridSize).fill('.').map((_, index) => Array(gridSize).fill('.'))
         const grid = new Grid(rows)
 
-        Object.keys(knot.pointsVisited).forEach(point => {
+        Object.keys(knot().pointsVisited).forEach(point => {
             grid.setCell(Point.fromString(point), '#')
         })
         grid.setCell(new Point(0, 0), 's')

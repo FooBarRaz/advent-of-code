@@ -1,5 +1,5 @@
 import {areTouching, machine, parseInput, problem1, problem2} from "./problemSolver";
-import {Point} from "../../utils/grid";
+import {Point} from "../../../utils/grid";
 import {data} from "./data";
 
 const pt = (x: number, y: number) => new Point(x, y)

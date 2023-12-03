@@ -6,7 +6,9 @@
   "scripts": {
     "start": "ts-node src/main.ts",
     "cli": "ts-node cli/main.ts",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "deploy": "npm run build && sam deploy --guided"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +18,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^27.0.2",
-    "@types/node": "^16.10.3",
+    "@types/node": "^16.18.67",
     "@types/yup": "^0.29.13",
     "babel-jest": "^27.2.5",
     "jest": "^27.2.5",
@@ -24,7 +26,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "axios": "^0.23.0",
+    "axios": "^1.6.2",
     "commander": "^9.4.1",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",

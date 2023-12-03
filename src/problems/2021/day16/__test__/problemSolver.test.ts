@@ -1,4 +1,4 @@
-import {hex2bin} from "../../../utils/numbers";
+import { hex2bin } from "../../../../utils/numbers";
 import {decodePacket} from "../problemSolver";
 
 describe('hex2bin', function () {

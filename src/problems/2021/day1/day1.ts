@@ -1,5 +1,5 @@
-import {fillArray, sum} from "../../utils/listOps";
-import {parseNumbers} from "../../utils/dataReader";
+import {fillArray, sum} from "../../../utils/listOps";
+import {parseNumbers} from "../../../utils/dataReader";
 
 const threeples = (input: Array<number>): Array<Array<number>> =>
     fillArray(input.length - 2)

@@ -1,4 +1,4 @@
-import {groupBy} from "../../utils/listOps";
+import {groupBy} from "../../../utils/listOps";
 
 export type BoxStacks = Record<string, string[]>
 
@@ -33,7 +33,7 @@ export const parseRawState = (rawState: string): BoxStacks => {
             return acc
         }, {});
 
-    (boxStacks as string[][]).forEach((stack, index) => {
+    (boxStacks as string[][][]).forEach((stack, index) => {
         stack.map(eachColumn => eachColumn[1]).forEach((boxId, boxIndex) => {
             if(boxId.trim()) {
                 boxIds[`${boxIndex + 1}`].push(boxId);
@@ -71,11 +71,11 @@ export const performOperation9001 = (initialState: BoxStacks, operation: MoveOpe
 export const problem1 = (input: string): string => {
     const {initialState, operations} = parseInput(input)
     const finalState = operations.reduce(performOperation9000, initialState)
-    return Object.values(finalState).reduce((acc, stack) => `${acc}${stack.pop()}`, '') as string
+    return Object.values(finalState).reduce((acc, stack: []) => `${acc}${stack.pop()}`, '') as string
 }
 
 export const problem2 = (input: string): string => {
     const {initialState, operations} = parseInput(input)
     const finalState = operations.reduce(performOperation9001, initialState)
-    return Object.values(finalState).reduce((acc, stack) => `${acc}${stack.pop()}`, '') as string
+    return Object.values(finalState).reduce((acc, stack: []) => `${acc}${stack.pop()}`, '') as string
 }

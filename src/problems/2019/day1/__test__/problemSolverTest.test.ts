@@ -1,6 +1,6 @@
 import {calculateFuelRequirementByMass, calculateFuelRequirementByMassRecursively} from "../problemSolver";
 import {data} from "../data";
-import {splitLines} from "../../../utils/dataReader";
+import { splitLines } from "../../../../utils/dataReader";
 
 describe('Day 1', function () {
 

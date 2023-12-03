@@ -1,4 +1,4 @@
-import { readFile } from '../../utils/dataReader';
+import { readFile } from "../../../utils/dataReader";
 
 type Case = {
     character: string;

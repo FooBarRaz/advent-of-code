@@ -1,6 +1,6 @@
 import {Line, parseInput, problem1, problem2, toGrid} from "./problemSolver";
-import {Point} from "../../utils/grid";
 import {data} from "./data";
+import { Point } from "../../../utils/grid";
 
 const testInput = `498,4 -> 498,6 -> 496,6
 503,4 -> 502,4 -> 502,9 -> 494,9`

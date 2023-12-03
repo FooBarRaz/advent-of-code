@@ -1,4 +1,4 @@
-import {fillRange} from "../../utils/listOps";
+import {fillRange} from "../../../utils/listOps";
 
 type FuelCostFunction = (fromPosition: number, toPosition: number) => number;
 

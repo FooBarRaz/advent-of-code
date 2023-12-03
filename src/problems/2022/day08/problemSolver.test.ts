@@ -1,6 +1,6 @@
 import {parseInput, problem2, VisibilityGrid} from "./problemSolver";
-import {Point} from "../../utils/grid";
 import {data} from "./data";
+import { Point } from "../../../utils/grid";
 
 const testInput = `30373
 25512

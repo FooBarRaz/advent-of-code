@@ -1,5 +1,5 @@
 import {split} from "lodash";
-import {splitLines} from "../../utils/dataReader";
+import {splitLines} from "../../../utils/dataReader";
 
 export class Cave {
     private _isBigCave: boolean;

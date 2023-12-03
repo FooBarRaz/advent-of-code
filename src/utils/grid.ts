@@ -1,5 +1,5 @@
+import { ChitonGrid } from "../problems/2021/day15/problemSolver";
 import {fillArray} from "./listOps";
-import {ChitonGrid} from "../2021/day15/problemSolver";
 export const initializeGrid = <T>(rows: number, columns: number, placeholder: T): Grid<T> => {
     const gridRows: Array<Array<T>> = fillArray(rows).map(eachRow => {
         return fillArray(columns).map(eachColumn => placeholder)

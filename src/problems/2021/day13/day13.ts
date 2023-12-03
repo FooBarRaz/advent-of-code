@@ -1,6 +1,6 @@
-import {splitLines} from "../../utils/dataReader";
-import {Grid, Point} from "../../utils/grid";
-import {fillArray} from "../../utils/listOps";
+import {splitLines} from "../../../utils/dataReader";
+import {Grid, Point} from "../../../utils/grid";
+import {fillArray} from "../../../utils/listOps";
 
 type GridContents = '#' | '.'
 export const toPoints = (input: string) => {
