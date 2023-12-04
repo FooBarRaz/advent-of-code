@@ -3,13 +3,12 @@ info:
   title: Advent of Code Solver API
   version: 1.0.0
   description: API to solve Advent of Code problems
-servers:
-  - url: http://localhost:8080/v1
+
 paths:
   /{year}/{day}:
     post:
       summary: Solve a specific Advent of Code problem
-      description: Returns solutions for both parts of the specified day's problem.
+      operationId: solveProblem
       parameters:
         - name: year
           in: path
@@ -34,10 +33,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemSolutionResponse'
-        '400':
-          description: Invalid input
-        '500':
-          description: Error processing the request
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AdventOfCodeApiHandler.Arn}/invocations
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+
 components:
   schemas:
     ProblemInput:
@@ -47,6 +52,7 @@ components:
       properties:
         input:
           type: string
+
     ProblemSolutionResponse:
       type: object
       properties:

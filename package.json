@@ -1,14 +1,14 @@
 {
   "name": "advent-of-code-2020",
   "version": "1.0.0",
-  "description": "",
+  "description": "",  
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/main.ts",
     "cli": "ts-node cli/main.ts",
     "test": "jest",
     "build": "tsc",
-    "deploy": "npm run build && sam deploy --guided"
+    "deploy": "npm run build && sam deploy -t src/api/sam.yaml --config-file samconfig.toml"
   },
   "keywords": [],
   "author": "",

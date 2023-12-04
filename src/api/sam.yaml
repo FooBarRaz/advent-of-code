@@ -1,5 +1,8 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+
 Resources:
-  MyApi:
+  AdventOfCodeApi:
     Type: AWS::Serverless::Api
     Properties:
       StageName: dev
@@ -9,15 +12,17 @@ Resources:
           Parameters:
             Location: 'api-spec.yaml'
 
-  MyFunction:
+  AdventOfCodeApiHandler:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
+      CodeUri: ../../dist/src/api
+      Handler: handler.handler
       Runtime: nodejs18.x
       Events:
-        MyApi:
-          Type: Api
-          Properties:
-            RestApiId: !Ref MyApi
-            Path: /{year}/{day}
-            Method: post
+         ApiEvent:
+           Type: Api
+           Properties:
+             Path: /{year}/{day}
+             Method: post
+             RestApiId:
+               Ref: AdventOfCodeApi
