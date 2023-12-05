@@ -15,7 +15,7 @@ Resources:
   AdventOfCodeApiHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ../../dist/src/api
+      CodeUri: ../../dist/src
       Handler: handler.handler
       Runtime: nodejs18.x
       Events:

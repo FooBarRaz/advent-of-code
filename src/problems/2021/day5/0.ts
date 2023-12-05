@@ -1,4 +1,5 @@
 import {splitLines} from "../../../utils/dataReader";
+import { Line } from "../../../utils/grid";
 import {fillArray} from "../../../utils/listOps";
 
 export type Point = {
@@ -21,10 +22,6 @@ export const line = (x1: number, y1: number, x2: number, y2: number): Line => ({
     }
 })
 
-export type Line = {
-    a: Point
-    b: Point
-}
 export const isPointOnLine = (point: Point, line: Line): boolean => {
     return (isHorizontal(line) && point.x === line.a.x && [line.a.y, line.b.y, point.y].sort()[1] === point.y) ||
         (isVertical(line) && point.y === line.a.y && [line.a.x, line.b.x, point.x].sort()[1] === point.x)

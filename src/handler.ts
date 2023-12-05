@@ -1,3 +1,5 @@
+import { registry } from "./problems/problemRegistry";
+
 interface EventBody {
     input: string;
 }
@@ -23,9 +25,13 @@ export const handler = async (event: LambdaEvent): Promise<LambdaResponse> => {
         const { year, day } = event.pathParameters;
         const { input } = JSON.parse(event.body) as EventBody;
 
+        console.log(`getting solution for year ${year}, day ${day}`);
+
+        const problemSolution = registry[year][day];
+
         // Here you would add your logic to solve the problems
-        const solutionPartOne = `Solution Part One for ${year}, Day ${day}: Not implemented`;
-        const solutionPartTwo = `Solution Part Two for ${year}, Day ${day}: Not implemented`;
+        const solutionPartOne = problemSolution[1](input) || `Solution Part One for ${year}, Day ${day}: Not implemented`;
+        const solutionPartTwo = problemSolution[2](input) || `Solution Part Two for ${year}, Day ${day}: Not implemented`;
 
         const response: LambdaResponse = {
             statusCode: 200,
