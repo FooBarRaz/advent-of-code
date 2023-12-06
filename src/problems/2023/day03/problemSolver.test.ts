@@ -1,5 +1,7 @@
 import {
+  findAdjacentNumbers,
   findPartNumbers,
+  findSymbolsOnLine,
   numberSequences,
   parseInput,
   problem1,
@@ -58,7 +60,6 @@ describe("2023", () => {
           //6,7
           expect(shouldBeIncluded(testGrid, new Point(6, 7))).toBe(true);
         });
-
       });
 
       describe("findPartNumbers", () => {
@@ -70,7 +71,7 @@ describe("2023", () => {
           });
         });
 
-        const shouldInclude = [467, 35, 633, 617, 592, 755, 664,598];
+        const shouldInclude = [467, 35, 633, 617, 592, 755, 664, 598];
 
         shouldInclude.forEach((number) => {
           it(`should include ${number}`, () => {
@@ -79,6 +80,42 @@ describe("2023", () => {
         });
       });
 
+      describe("findSymbolsOnLine", () => {
+        it("should find symbols on a line", () => {
+          const line = "...*......";
+          const result = findSymbolsOnLine(line, 0);
+          expect(result).toEqual([new Point(3, 0)]);
+        });
+
+        it("should find  multiple symbols on a line", () => {
+          const line = `..*..&..$..##..!..`;
+          const result = findSymbolsOnLine(line, 0);
+          expect(result).toHaveLength(6);
+          expect(result).toEqual([
+            new Point(2, 0),
+            new Point(5, 0),
+            new Point(8, 0),
+            new Point(11, 0),
+            new Point(12, 0),
+            new Point(15, 0),
+          ]);
+        });
+      });
+
+      describe.skip('find adjacent numbers', () => {
+        it('should find adjacent numbers', () => {
+          const grid = parseInput(`1.2.3$.4.5.6`);
+          const result = findAdjacentNumbers(grid, new Point(5,0));
+          expect(result).toEqual([3]);
+        });
+
+        it('should combine adjacent numeric strings', () => {
+          const grid = parseInput(`1.223$.4.5.6`);
+
+          const result = findAdjacentNumbers(grid, new Point(5,0));
+          expect(result).toEqual([223]);
+        })
+      });
       describe("find number sequences", () => {
         describe("given a grid", () => {
           it("should return the points at which a number is found", () => {
@@ -95,14 +132,75 @@ describe("2023", () => {
       });
     });
     describe("problemSolver", () => {
-      it('should solve for testData', () => {
+      it("should solve for testData", () => {
         expect(problem1.solve(testData)).toBe(4361);
       });
       it("should solve part 1", () => {
         expect(problem1.solve(data)).toBe(559667);
       });
-      it("should solve part 2", () => {
+      it.skip("should solve part 2", () => {
         expect(problem2.solve(data)).toBe(42);
+      });
+
+      describe("More examples", () => {
+        const examples = [
+          {
+            input: `12.......*..
+            +.........34
+            .......-12..
+            ..78........
+            ..*....60...
+            78.........9
+            .5.....23..$
+            8...90*12...
+            ............
+            2.2......12.
+            .*.........*
+            1.1..503+.56`,
+            expected: {
+              part1: 925,
+            },
+          },
+          {
+            input: `.......5......
+            ..7*..*.....4*
+            ...*13*......9
+            .......15.....
+            ..............
+            ..............
+            ..............
+            ..............
+            ..............
+            ..............
+            21............
+            ...*9.........`,
+            expected: {
+              part1: 62,
+            },
+          },
+          {
+            input: `........
+            .24..4..
+            ......*.`,
+            expected: {
+              part1: 4,
+            },
+          },
+          {
+            input: `......
+            .23.23
+            .....$`,
+            expected: {
+              part1: 23,
+            },
+          },
+        ];
+
+        examples.forEach((example) => {
+          it(`should solve example`, () => {
+            expect(problem1.solve(example.input)).toBe(example.expected.part1);
+          });
+        });
       });
 
       it("should solve some dude's example", () => {
@@ -117,10 +215,10 @@ describe("2023", () => {
         ....827.............
         ........@......278*.
         .....990...........7
-        ....................`
+        ....................`;
 
         expect(problem1.solve(example)).toBe(5049);
-      })
+      });
     });
   });
 });
