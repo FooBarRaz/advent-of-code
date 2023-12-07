@@ -112,7 +112,7 @@ describe("2023", () => {
         expect(problem1.solve(data)).toBe(559667);
       });
       it("should solve part 2", () => {
-        expect(problem2.solve(data)).toBe(42);
+        expect(problem2.solve(data)).toBe(86841457);
       });
 
       it("should solve part 2 for test data", () => {
