@@ -1,12 +1,11 @@
 import {
   findAdjacentNumbers,
   findPartNumbers,
-  findSymbolsOnLine,
+  findMatchOnLine,
   numberSequences,
   parseInput,
   problem1,
-  problem2,
-  shouldBeIncluded,
+  problem2
 } from "./problemSolver";
 import data from "./data";
 import { Grid, Point } from "../../../utils/grid";
@@ -35,33 +34,6 @@ describe("2023", () => {
         expect(result.getPointValue(new Point(0, 4))).toBe("6");
       });
 
-      describe("shouldBeIncluded", () => {
-        it("is false by default", () => {
-          expect(shouldBeIncluded(testGrid, new Point(0, 0))).toBe(false);
-        });
-
-        it("is false for symbols", () => {
-          expect(shouldBeIncluded(testGrid, new Point(3, 4))).toBe(false);
-        });
-
-        it("is false for empty spots", () => {
-          expect(shouldBeIncluded(testGrid, new Point(4, 4))).toBe(false);
-        });
-
-        it("is true for numbers with a symbol above", () => {
-          expect(shouldBeIncluded(testGrid, new Point(3, 2))).toBe(true);
-        });
-
-        it("is true for numbers with a symbol below", () => {
-          expect(shouldBeIncluded(testGrid, new Point(6, 2))).toBe(true);
-        });
-
-        it("is true for numbers with symbol on bottom left", () => {
-          //6,7
-          expect(shouldBeIncluded(testGrid, new Point(6, 7))).toBe(true);
-        });
-      });
-
       describe("findPartNumbers", () => {
         const shouldNotInclude = [114, 58];
 
@@ -83,13 +55,13 @@ describe("2023", () => {
       describe("findSymbolsOnLine", () => {
         it("should find symbols on a line", () => {
           const line = "...*......";
-          const result = findSymbolsOnLine(line, 0);
+          const result = findMatchOnLine(line, 0);
           expect(result).toEqual([new Point(3, 0)]);
         });
 
         it("should find  multiple symbols on a line", () => {
           const line = `..*..&..$..##..!..`;
-          const result = findSymbolsOnLine(line, 0);
+          const result = findMatchOnLine(line, 0);
           expect(result).toHaveLength(6);
           expect(result).toEqual([
             new Point(2, 0),
@@ -135,11 +107,16 @@ describe("2023", () => {
       it("should solve for testData", () => {
         expect(problem1.solve(testData)).toBe(4361);
       });
+
       it("should solve part 1", () => {
         expect(problem1.solve(data)).toBe(559667);
       });
-      it.skip("should solve part 2", () => {
+      it("should solve part 2", () => {
         expect(problem2.solve(data)).toBe(42);
+      });
+
+      it("should solve part 2 for test data", () => {
+        expect(problem2.solve(testData)).toBe(467835);
       });
 
       describe("More examples", () => {
